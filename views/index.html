@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SEGUE</title>
+	<meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<link rel="stylesheet" href="css/normalize.min.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+	<header>
+		<h1>SEGUE</h1>
+	</header>
+
+	<div id="main-container">
+
+	<!-- Templates -->
+	<!-- Link list for articles to choose from -->
+	<script id="tpl-link-list" type="text/html">
+
+		<div id="list-container">
+			<ul class="link-items">
+				<% for(var links in data){ %>
+					<li> <%= data[links].tag %> </li>
+				<% } %>
+			</ul>
+		</div>
+
+	</script>
+
+	<!-- Article to read -->
+	<script id="tpl-article" type="text/html">
+
+		<h1> <%= data.title %> </h1>
+		<h2> <%= data.source %> </h2>
+		<h2> <%= data.author %> </h2>
+		<h2> <%= data.date %> </h2>
+	
+		<p> <%= data.text %> </p>
+	
+	</script>
+
+	</div>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="js/jquery-min.js"></script>
+	<script type="text/javascript" src="js/underscore-min.js"></script>
+	<script type="text/javascript" src="js/main.js"> </script>
+</body>
+</html>
