@@ -4,7 +4,7 @@ var express     = require('express'),
     mongo       = require('mongodb'),
     MongoClient = require('mongodb').MongoClient,
     Server      = require('mongodb').Server,
-    algorithm   = require('./algorithm.js');  //article matching algorithm
+    algorithm   = require('./algorithm/algorithm.js');  //article matching algorithm
 var app = express();
 var PORT = 8080;
 
