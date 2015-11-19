@@ -1,9 +1,5 @@
-var exports = function(){
-	
-	this.test = function(){
+module.exports = {
+	test: function(){
 		alert("Test");
 	}
-
 }
-
-module.exports = "algorithm";
