@@ -1,15 +1,16 @@
 /*---------- BASIC SETUP ----------*/
 var express     = require('express'),
     bodyParser  = require('body-parser'),
-    mongo = require('mongodb'),
+    mongo       = require('mongodb'),
     MongoClient = require('mongodb').MongoClient,
-    Server = require('mongodb').Server;   // helper for parsing HTTP requests
-var app = express();                        // our Express app
-var PORT = 4000;
+    Server      = require('mongodb').Server,
+    algorithm   = require('./algorithm.js');  //article matching algorithm
+var app = express();
+var PORT = 8080;
 
 // Body Parser
-app.use(bodyParser.urlencoded({ extended: false }));// parse application/x-www-form-urlencoded
-app.use(bodyParser.json());                         // parse application/json
+app.use(bodyParser.urlencoded({ extended: false }));    // parse application/x-www-form-urlencoded
+app.use(bodyParser.json());                             // parse application/json
 
 // Express server
 app.use(function(req, res, next) {
@@ -20,7 +21,7 @@ app.use(function(req, res, next) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log('incoming request from ---> ' + ip);
     var url = req.originalUrl;
-    console.log('### requesting ---> ' + url);  // Show the URL user just hit by user
+    console.log('### requesting ---> ' + url);
     next();
 });
 
@@ -34,6 +35,9 @@ var db = mongoServer.db('thesis');
 // -----> Socket.io setup
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+
+// -----> loading algorithm
+console.log("Test " + algorithm.test);
 
 // -----> Starting up servers
 mongoServer.open(function(err, mongoServer) {
@@ -55,6 +59,5 @@ io.on('connection', function(socket) {
     // Disconnecting
     socket.on('disconnect', function() {
         io.sockets.emit('bye', 'See you, ' + socket.id + '!');
-        leaveAllRooms(socket);
     });
 });
