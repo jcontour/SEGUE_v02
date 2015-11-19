@@ -1,9 +1,9 @@
-var exports = function(){
+var algorithm = {
 	
-	this.test = function(){
+	test: function(){
 		alert("Test");
 	}
 
 }
 
-module.exports = "algorithm";
+module.exports = algorithm;
