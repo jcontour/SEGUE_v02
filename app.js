@@ -8,11 +8,11 @@ var express     = require('express'),
 var app = express();
 var PORT = 8080;
 
-// Body Parser
+// -----> Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));    // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                             // parse application/json
 
-// Express server
+// -----> Express server
 app.use(function(req, res, next) {
     // Setup a Cross Origin Resource sharing
     // See CORS at https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
@@ -28,25 +28,37 @@ app.use(function(req, res, next) {
 app.use('/', express.static(__dirname + '/views'));
 
 // -----> Mongo setup
-var mongoServer = new MongoClient(new Server("localhost", 27017));
-var db = mongoServer.db('thesis');
+var mongoclient = new MongoClient(new Server("localhost", 27017));
+var db = mongoclient.db('thesis');
 
 
 // -----> Socket.io setup
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-// -----> loading algorithm
-console.log("Test " + algorithm.test);
-
 // -----> Starting up servers
-mongoServer.open(function(err, mongoServer) {
+mongoclient.open(function(err, mongoclient) {
     if(err) throw err;
+    console.log("started mongo server");
+
     server.listen(PORT, function(){
         console.log('Express server is running at ' + PORT);
     });
 });
 
+// Calls to DB
+
+//returns database results for a query
+var getDB = function(query, callback){
+    // var q = {keywords = query};
+
+    console.log("finding db");
+    
+    db.collection('segue1').findOne(function(err, doc){
+        if (err) throw err;
+        callback(doc);
+    });
+}
 
 /*-------------- APP --------------*/
 io.on('connection', function(socket) {
@@ -55,9 +67,17 @@ io.on('connection', function(socket) {
     console.log('A new user has connected: ' + socket.id);
 
     // Listeners
+    socket.on("find-match", function(data){
+        getDB(db, data, function(doc){ 
+            algorithm.init("potato", doc, function(){
+                console.log(doc);
+            });
+        });
+    })
 
     // Disconnecting
     socket.on('disconnect', function() {
         io.sockets.emit('bye', 'See you, ' + socket.id + '!');
     });
 });
+

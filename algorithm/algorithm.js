@@ -1,9 +1,11 @@
-var exports = function(){
+var algorithm = {
 	
-	this.test = function(){
-		alert("Test");
+	init: function(keyword, db, callback){
+		console.log("i'm doing algorithm things!!");
+		callback(db);
+		//do stuff now
 	}
 
 }
 
-module.exports = "algorithm";
+module.exports = algorithm;
