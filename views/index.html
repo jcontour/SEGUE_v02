@@ -21,6 +21,18 @@
 	<div id="main-container">
 
 	<!-- Templates -->
+	<!-- Article to read -->
+	<script id="tpl-article" type="text/html">
+
+		<h1> <%= data.title %> </h1>
+		<h2> <%= data.source %> </h2>
+		<h2> <%= data.author %> </h2>
+		<h2> <%= data.date %> </h2>
+	
+		<p> <%= data.text %> </p>
+	
+	</script>
+
 	<!-- Link list for articles to choose from -->
 	<script id="tpl-link-list" type="text/html">
 
@@ -32,18 +44,6 @@
 			</ul>
 		</div>
 
-	</script>
-
-	<!-- Article to read -->
-	<script id="tpl-article" type="text/html">
-
-		<h1> <%= data.title %> </h1>
-		<h2> <%= data.source %> </h2>
-		<h2> <%= data.author %> </h2>
-		<h2> <%= data.date %> </h2>
-	
-		<p> <%= data.text %> </p>
-	
 	</script>
 
 	</div>

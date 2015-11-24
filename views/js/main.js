@@ -9,7 +9,20 @@ app.main = (function() {
 	    socket = io.connect();
 
 	    // Listeners
+	    socket.on("return-first", function(data){
+	    	render("article", "#main-container", 'replace', data.article);
+	    	render("link-list", "#main-container", 'append', data.nextLinks);
+	    })
 
+	    socket.on("return-next", function(doc){
+	    	render("article", "#main-container", 'append', doc.article);
+	    	render("link-list", "#main-container", 'append', doc.nextLinks);
+	    });
+
+	}
+
+	var initArticles = function(){
+		socket.emit("start");
 	}
 
 	var render = function(template, containerElement, method, data){
@@ -43,6 +56,7 @@ app.main = (function() {
 		console.log('Initializing app.');
 		socketSetup();
 		attachEvents();
+		initArticles();
 	};
 
 	return {

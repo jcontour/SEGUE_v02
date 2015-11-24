@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
     var url = req.originalUrl;
     console.log('### requesting ---> ' + url);
     next();
-});
+});[]
 
 app.use('/', express.static(__dirname + '/views'));
 
@@ -47,16 +47,18 @@ mongoclient.open(function(err, mongoclient) {
 });
 
 // Calls to DB
-
-//returns database results for a query
-var getDB = function(query, callback){
-    // var q = {keywords = query};
-
-    console.log("finding db");
-    
-    db.collection('segue1').findOne(function(err, doc){
+var getArticle = function(whichdb, query, callback){
+    db.collection(whichdb).findOne(query, function(err, doc){
         if (err) throw err;
         callback(doc);
+    });
+}
+
+var getDocArray = function(whichdb, query, callback){
+    console.log("querying db");
+
+    var docArray = db.collection(whichdb).find(query).toArray(function(err, docs) {
+        if (err) throw err;
     });
 }
 
@@ -67,10 +69,23 @@ io.on('connection', function(socket) {
     console.log('A new user has connected: ' + socket.id);
 
     // Listeners
-    socket.on("find-match", function(data){
-        getDB(db, data, function(doc){ 
-            algorithm.init("potato", doc, function(){
-                console.log(doc);
+    socket.on("start", function(data){
+        getArticle("trend1", {}, function(startdoc){
+            getDocArray("segue1", {}, function(docArray){
+                algorithm.start(data.keywords, docArray, function(matching_ids){
+                    socket.emit("return-first", {
+                        article: startdoc,
+                        nextLinks: matching_ids
+                    })
+                });
+            })
+        })
+    });
+
+    socket.on("find-next", function(data){
+        getDocArray("segue1", data, function(docArray){ 
+            algorithm.start("potato", docArray, function(doc){
+                socket.emit("return-next", doc)
             });
         });
     })
