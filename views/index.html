@@ -19,30 +19,35 @@
 	</header>
 
 	<div id="main-container">
+		<section class="date">
+
+			<h2>Nov 13, 2015</h2>
+
+		</section>
 
 	<!-- Templates -->
 	<!-- Article to read -->
 	<script id="tpl-article" type="text/html">
-
-		<h1> <%= data.title %> </h1>
-		<h2> <%= data.source %> </h2>
-		<h2> <%= data.author %> </h2>
-		<h2> <%= data.date %> </h2>
-	
-		<p> <%= data.text %> </p>
-	
+		<section class="article-container">
+			<h1 class="title"> <%= data.title %> </h1>
+			<h2 class="author-name"> <%= data.source %> </h2>
+			<h2 class="article-source"> <%= data.author %> </h2>
+			<div class="article-text">
+				<p> <%= data.text %> </p>
+			</div>
+		</section>
 	</script>
 
 	<!-- Link list for articles to choose from -->
 	<script id="tpl-link-list" type="text/html">
 
-		<div id="list-container">
+		<section class="link-container">
 			<ul class="link-items">
 				<% for(var links in data){ %>
-					<li> <%= data[links].tag %> </li>
+					<li class="link" id= <%=data[links].id%> > <%= data[links].keyword %> </li>
 				<% } %>
 			</ul>
-		</div>
+		</section>
 
 	</script>
 

@@ -9,54 +9,42 @@ app.main = (function() {
 	    socket = io.connect();
 
 	    // Listeners
-	    socket.on("return-first", function(data){
-	    	render("article", "#main-container", 'replace', data.article);
-	    	render("link-list", "#main-container", 'append', data.nextLinks);
-	    })
-
-	    socket.on("return-next", function(doc){
-	    	render("article", "#main-container", 'append', doc.article);
-	    	render("link-list", "#main-container", 'append', doc.nextLinks);
+	    socket.on("return-article", function(data){
+	    	render("article", data.article);
+	    	render("link-list", data.nextLinks);
 	    });
 
 	}
 
-	var initArticles = function(){
-		socket.emit("start");
-	}
-
-	var render = function(template, containerElement, method, data){
-		console.log(method + ' ' + template + ' in ' + containerElement);
+	var render = function(template, data){
+		console.log('rendering ' + template);
 		if(data !== undefined){
-			console.log(data);
+			// console.log(data);
 		}
 
 		var templateToCompile = $('#tpl-' + template).html();
 		var compiled =  _.template(templateToCompile);
 
-		if(method === 'replace'){
-			$(containerElement).html(compiled({data: data}));	
-		}else if(method === 'append'){
-			$(containerElement).append(compiled({data: data}));
-		}
-
+		$('#main-container').append(compiled({data: data}));
+		
 		// AUTO SCROLL
-		// $('#main-container').css('scrollHeight', '';
-		// var objDiv = document.getElementById("main-container");
-		// objDiv.scrollTop = objDiv.scrollHeight;
+		var objDiv = document.getElementById("main-container");
+		objDiv.scrollLeft = objDiv.width;
 
         attachEvents();
 	};
 
 	var attachEvents = function(){
-		//listening for clicks. 
+		$('.link').click(function(){
+			$(this).addClass("active");
+			socket.emit("find-next", this.id);
+		})
 	}
 
 	var init = function(){
 		console.log('Initializing app.');
 		socketSetup();
 		attachEvents();
-		initArticles();
 	};
 
 	return {

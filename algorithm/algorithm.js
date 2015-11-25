@@ -1,36 +1,49 @@
-var algorithm = {
+var datalevel = 1;
 
-	function compareData(keywordArray, docArray, callback){
+var compareData = function(keywordArray, docArray, callback){
     console.log("comparing data");
 
     // console.log(docArray);
     var matching_ids = [];
+    var matching_ids_objs = []
 
     //for number of trending keywords
     for (var i = 0; i < keywordArray.length; i++){
         //in all child articles
         for(var j = 0; j < docArray.length; j++){
-            //for length of child keyword array
+			//for length of child keyword array
             for(var k = 0; k < docArray[j].keywords.length; k++){
-                //if keyword matches trending keyword
+				//if keyword matches trending keyword
                 if (keywordArray[i] == docArray[j].keywords[k]){
-                    if (matching_ids.indexOf(docArray[j].id) == -1){
-                        matching_ids.push(docArray[j].id);
+                    if (matching_ids.indexOf(docArray[j]._id) == -1){
+                    	// console.log(docArray[j]._id)
+                        matching_ids.push(docArray[j]._id);
+
+                        matching_ids_objs.push({
+                        	id : docArray[j]._id, 
+                        	keyword: docArray[j].keywords[k],
+                        	level: datalevel
+                        });
                     }
                 }
             }
         }
     }
-    callback(matching_ids);
+
+    matching_ids.sort()
+    console.log(matching_ids);
+    callback(matching_ids_objs);
+    datalevel ++;
 }
+
+var algorithm = {
 	
-	start: function(keywordsArray, docArray, callback){
+	start: function(keywordArray, docArray, callback){
 		console.log("i'm doing algorithm things!!");
-		compareData(keywordsArray, docArray, function(matching_ids){
+		compareData(keywordArray, docArray, function(matching_ids){
 			callback(matching_ids);
 		});
 	}
-
 }
 
 module.exports = algorithm;

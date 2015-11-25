@@ -3,6 +3,7 @@ var express     = require('express'),
     bodyParser  = require('body-parser'),
     mongo       = require('mongodb'),
     MongoClient = require('mongodb').MongoClient,
+    ObjectID = require('mongodb').ObjectID,
     Server      = require('mongodb').Server,
     algorithm   = require('./algorithm/algorithm.js');  //article matching algorithm
 var app = express();
@@ -50,16 +51,25 @@ mongoclient.open(function(err, mongoclient) {
 var getArticle = function(whichdb, query, callback){
     db.collection(whichdb).findOne(query, function(err, doc){
         if (err) throw err;
+        console.log(doc);
         callback(doc);
     });
 }
 
 var getDocArray = function(whichdb, query, callback){
     console.log("querying db");
+    var docArray = []
 
-    var docArray = db.collection(whichdb).find(query).toArray(function(err, docs) {
+    db.collection(whichdb).find(query).each(function(err, doc) {
         if (err) throw err;
+        if (doc != null) {
+            docArray.push(doc)
+        } else {
+            callback(docArray);
+        }    
     });
+
+    // callback(docArray);
 }
 
 /*-------------- APP --------------*/
@@ -67,28 +77,38 @@ io.on('connection', function(socket) {
     /*––––––––––– SOCKET.IO starts here –––––––––––––––*/
 
     console.log('A new user has connected: ' + socket.id);
+    //init articles
 
-    // Listeners
-    socket.on("start", function(data){
-        getArticle("trend1", {}, function(startdoc){
-            getDocArray("segue1", {}, function(docArray){
-                algorithm.start(data.keywords, docArray, function(matching_ids){
-                    socket.emit("return-first", {
-                        article: startdoc,
-                        nextLinks: matching_ids
-                    })
+    getArticle("trend", {}, function(startdoc){
+        //console.log(startdoc);
+        getDocArray("segue2", {}, function(docArray){
+            // console.log(docArray);
+            algorithm.start(startdoc.keywords, docArray, function(matching_ids){
+                console.log(matching_ids);
+                socket.emit("return-article", {
+                    article: startdoc,
+                    nextLinks: matching_ids
                 });
-            })
-        })
-    });
-
-    socket.on("find-next", function(data){
-        getDocArray("segue1", data, function(docArray){ 
-            algorithm.start("potato", docArray, function(doc){
-                socket.emit("return-next", doc)
             });
         });
-    })
+    });
+
+    // Listeners
+        
+
+    socket.on("find-next", function(data){
+        var obj_id = new ObjectID(data);
+        getArticle("segue2", {_id : obj_id}, function(doc){ 
+            getDocArray("segue2", {}, function(docArray){
+                algorithm.start(doc.keywords, docArray, function(matching_ids){
+                    socket.emit("return-article", {
+                    article: doc,
+                    nextLinks: matching_ids
+                    });
+                });
+            });
+        });
+    });
 
     // Disconnecting
     socket.on('disconnect', function() {

@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Muli:300,300italic,400italic,400|Raleway:400,300,600,700|Oxygen:400,700,300);
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,600);
 
 @font-face {
     font-family: LeagueSpartan;
@@ -8,9 +8,9 @@
 /*darker 3A806D*/
 /*lighter 7AC798*/
 
-body, html{
+body {
 	margin: 0px;
-	padding: 0px;
+	padding: 60px 0px 0px 0px;
 }
 
 header{
@@ -34,3 +34,109 @@ header #user-profile {
 	right: 10px;
 	top: 10px;
 }
+
+#main-container{
+	margin: 2em 0px 0px 2vw;
+	height: calc(100vh - 60px - 2em);
+	overflow-x: scroll;
+}
+
+.date {
+/*	background-color: #F1F2ED;
+*/	width: 8em;
+	height: 100%;
+	float: left;
+	margin-right: 2.5em;
+	text-align: center;
+	/*display: inline-block;*/
+}
+
+.date h2{
+	font-family: LeagueSpartan, Helvetica, sans-serif;
+	font-size: .8em;
+	margin: 0;
+	padding-top: 1em;
+}
+
+.link-container{
+/*	background-color: #DDDED9;
+*/	font-family: LeagueSpartan, Helvetica, sans-serif;
+	font-size: 1em;
+	width: 10em;
+	height: 100%;
+	float: left;
+	margin-right: 2.5em;
+	display: inline;
+}
+
+.link-items{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.link-items li {
+	width: 100%;
+	height: 2em;
+	background-color: #3A806D;
+	margin-bottom: .5em;
+	text-align: center;
+	padding-top: 1em;
+	font-size: .8em;
+	color: white;
+}
+
+.link-items li:hover{
+	background-color: #7AC798;
+	color: black;
+}
+
+.link-items .active{
+	background-color: #7AC798;
+	color: black;
+}
+
+.article-container{
+	/*background-color: #C8C9C4;*/
+	width: 30em;
+	height: calc(100% - 15px);
+	float: left;
+	overflow: scroll;
+	margin-right: 2.5em;
+	border: 5px solid #7AC798;	
+	padding: 0 1.5em;
+	display: inline;
+}
+
+.title {
+	font-family: LeagueSpartan, Helvetica, sans-serif;
+	margin: 1em 0 .5em 0;
+	padding: 0;
+}
+
+.author-name{
+	font-family: Raleway, Helvetica, sans-serif;
+	font-size: 1em;
+	font-weight: 600;
+	display: inline;
+	float: left;
+	margin: 0 0 1em 0;
+}
+
+.article-source{
+	font-family: Raleway, Helvetica, sans-serif;
+	font-size: 1em;
+	font-weight: 600;
+	display: inline;
+	float: right;
+	margin: 0 0 1em 0;
+}
+
+.article-text{
+	font-family: Raleway, Helvetica, sans-serif;
+	font-weight: 300;
+	clear: both;
+}
+
+
+
