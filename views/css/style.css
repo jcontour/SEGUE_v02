@@ -38,7 +38,8 @@ header #user-profile {
 #main-container{
 	margin: 2em 0px 0px 2vw;
 	height: calc(100vh - 60px - 2em);
-	overflow-x: scroll;
+	overflow: auto;
+	white-space: nowrap;
 }
 
 .date {
@@ -66,7 +67,8 @@ header #user-profile {
 	height: 100%;
 	float: left;
 	margin-right: 2.5em;
-	display: inline;
+	display: inline-block;
+	overflow: scroll;
 }
 
 .link-items{
@@ -105,7 +107,8 @@ header #user-profile {
 	margin-right: 2.5em;
 	border: 5px solid #7AC798;	
 	padding: 0 1.5em;
-	display: inline;
+	display: inline-block;
+	white-space: normal;
 }
 
 .title {

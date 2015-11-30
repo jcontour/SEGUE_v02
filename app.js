@@ -81,7 +81,7 @@ io.on('connection', function(socket) {
 
     getArticle("trend", {}, function(startdoc){
         //console.log(startdoc);
-        getDocArray("segue2", {}, function(docArray){
+        getDocArray("segue", {}, function(docArray){
             // console.log(docArray);
             algorithm.start(startdoc.keywords, docArray, function(matching_ids){
                 console.log(matching_ids);
@@ -98,8 +98,8 @@ io.on('connection', function(socket) {
 
     socket.on("find-next", function(data){
         var obj_id = new ObjectID(data);
-        getArticle("segue2", {_id : obj_id}, function(doc){ 
-            getDocArray("segue2", {}, function(docArray){
+        getArticle("segue", {_id : obj_id}, function(doc){ 
+            getDocArray("segue", {}, function(docArray){
                 algorithm.start(doc.keywords, docArray, function(matching_ids){
                     socket.emit("return-article", {
                     article: doc,

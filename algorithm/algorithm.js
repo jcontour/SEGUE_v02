@@ -5,7 +5,8 @@ var compareData = function(keywordArray, docArray, callback){
 
     // console.log(docArray);
     var matching_ids = [];
-    var matching_ids_objs = []
+    var matching_keywords = [];
+    var matching_ids_objs = [];
 
     //for number of trending keywords
     for (var i = 0; i < keywordArray.length; i++){
@@ -15,9 +16,10 @@ var compareData = function(keywordArray, docArray, callback){
             for(var k = 0; k < docArray[j].keywords.length; k++){
 				//if keyword matches trending keyword
                 if (keywordArray[i] == docArray[j].keywords[k]){
-                    if (matching_ids.indexOf(docArray[j]._id) == -1){
+                    if (matching_ids.indexOf(docArray[j]._id) == -1 && matching_keywords.indexOf(docArray[j].keywords[k]) == -1 && matching_ids.length < 10){
                     	// console.log(docArray[j]._id)
                         matching_ids.push(docArray[j]._id);
+                        matching_keywords.push(docArray[j].keywords[k]);
 
                         matching_ids_objs.push({
                         	id : docArray[j]._id, 
@@ -32,6 +34,7 @@ var compareData = function(keywordArray, docArray, callback){
 
     matching_ids.sort()
     console.log(matching_ids);
+    console.log(matching_keywords);
     callback(matching_ids_objs);
     datalevel ++;
 }
