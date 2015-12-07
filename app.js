@@ -51,7 +51,7 @@ mongoclient.open(function(err, mongoclient) {
 var getArticle = function(whichdb, query, callback){
     db.collection(whichdb).findOne(query, function(err, doc){
         if (err) throw err;
-        console.log(doc);
+        // console.log(doc);
         callback(doc);
     });
 }
@@ -84,7 +84,7 @@ io.on('connection', function(socket) {
         getDocArray("segue", {}, function(docArray){
             // console.log(docArray);
             algorithm.start(startdoc.keywords, docArray, function(matching_ids){
-                console.log(matching_ids);
+                // console.log(matching_ids);
                 socket.emit("return-article", {
                     article: startdoc,
                     nextLinks: matching_ids
@@ -109,6 +109,26 @@ io.on('connection', function(socket) {
             });
         });
     });
+
+    // var articleRead = 0;
+    var userPath = []
+    socket.on("track-articles", function(data){
+        console.log("tracking articles read")
+        var obj_id = new ObjectID(data);
+        getArticle("segue", {_id : obj_id}, function(doc){ 
+            var currentArticle = {
+                // articleRead : articleRead,
+                articleId : obj_id,
+                articleTitle : doc.title
+                }
+            userPath.push(currentArticle);
+            console.log(userPath);
+        });
+    })
+
+    socket.on("get-profile", function(){
+        socket.emit("show-profile", userPath);
+    })
 
     // Disconnecting
     socket.on('disconnect', function() {

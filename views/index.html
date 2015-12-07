@@ -51,6 +51,25 @@
 
 	</script>
 
+	<!-- User profile -->
+	<script id="tpl-user-profile" type="text/html">
+
+	<section id="profile-container">
+		<div id="profile">
+			<h1>Reading Path</h1>
+			<div id="close-profile"> X </div>
+			<ul class="reading-path">
+				<% for(var links in data){ %>
+					<li class="path" id= <%=data[links].articleId%> > 
+						<%= data[links].articleTitle %> 
+					</li>
+				<% } %>
+			</ul>
+		</div>
+	</section>
+
+	</script>
+
 	</div>
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript" src="js/jquery-min.js"></script>

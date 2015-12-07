@@ -33,8 +33,8 @@ var compareData = function(keywordArray, docArray, callback){
     }
 
     matching_ids.sort()
-    console.log(matching_ids);
-    console.log(matching_keywords);
+    // console.log(matching_ids);
+    // console.log(matching_keywords);
     callback(matching_ids_objs);
     datalevel ++;
 }
