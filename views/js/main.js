@@ -10,6 +10,7 @@ app.main = (function() {
 
 	    // Listeners
 	    socket.on("return-article", function(data){
+	    	$('.article-container').remove();
 	    	render("article", data.article);
 	    	render("link-list", data.nextLinks);
 	    });
@@ -29,8 +30,7 @@ app.main = (function() {
 		
 		// AUTO SCROLL
 		var objDiv = document.getElementById("main-container");
-		objDiv.scrollLeft = objDiv.width;
-
+		objDiv.scrollLeft = objDiv.scrollWidth;
         attachEvents();
 	};
 

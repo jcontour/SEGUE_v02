@@ -38,7 +38,7 @@ header #user-profile {
 #main-container{
 	margin: 2em 0px 0px 2vw;
 	height: calc(100vh - 60px - 2em);
-	overflow: auto;
+	overflow: scroll;
 	white-space: nowrap;
 }
 
@@ -65,8 +65,8 @@ header #user-profile {
 	font-size: 1em;
 	width: 10em;
 	height: 100%;
-	float: left;
-	margin-right: 2.5em;
+	/*float: left;*/
+	margin-right: 1em;
 	display: inline-block;
 	overflow: scroll;
 }
@@ -102,9 +102,10 @@ header #user-profile {
 	/*background-color: #C8C9C4;*/
 	width: 30em;
 	height: calc(100% - 15px);
-	float: left;
+	/*float: left;*/
 	overflow: scroll;
 	margin-right: 2.5em;
+	margin-left: 1.5em;
 	border: 5px solid #7AC798;	
 	padding: 0 1.5em;
 	display: inline-block;
