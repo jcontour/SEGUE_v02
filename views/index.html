@@ -61,7 +61,8 @@
 			<ul class="reading-path">
 				<% for(var links in data){ %>
 					<li class="path" id= <%=data[links].articleId%> > 
-						<%= data[links].articleTitle %> 
+						<h2> <%= data[links].articleKeyword %> </h2>
+						<p class="path-p"> <%= data[links].articleTitle %> </p>
 					</li>
 				<% } %>
 			</ul>

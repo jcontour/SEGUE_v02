@@ -16,10 +16,8 @@ app.main = (function() {
 	    });
 
 	    socket.on("show-profile", function(data){
-	    	for (var i = 0; i < data.length; i ++){
-		    	console.log(data[i].articleTitle);
-	    	}
-	    	render("user-profile", data);
+	    	render("user-profile", data)
+	    	$('#profile-container').fadeIn();
 	    })
 
 	}
@@ -42,25 +40,25 @@ app.main = (function() {
 	};
 
 	var attachEvents = function(){
-		$('.link').click(function(){
+		$('.link').off('click').on('click',function(){
 			$(this).addClass("active");
 			socket.emit("find-next", this.id);
-			socket.emit("track-articles", this.id);
+			socket.emit("track-articles", {id : this.id, keyword: $(this).text()});
 		})
 
-		$('#user-profile').click(function(){
+		$('#user-profile').off('click').on('click', function(){
 			console.log("opening profile");
 			socket.emit("get-profile");
 		})
 
-		$('#close-profile').click(function(){
+		$('#close-profile').off('click').on('click',function(){
 			console.log("closing profile");
-			$('#profile-container').remove();
+			$('#profile-container').fadeOut().remove();
 		})
 
-		$('#profile-container').click(function(){
+		$('#profile-container').off('click').on('click',function(){
 			console.log("closing profile");
-			$(this).remove();	
+			$(this).fadeOut().remove();
 		})
 
 	}

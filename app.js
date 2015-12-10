@@ -114,12 +114,13 @@ io.on('connection', function(socket) {
     var userPath = []
     socket.on("track-articles", function(data){
         console.log("tracking articles read")
-        var obj_id = new ObjectID(data);
+        var obj_id = new ObjectID(data.id);
         getArticle("segue", {_id : obj_id}, function(doc){ 
             var currentArticle = {
                 // articleRead : articleRead,
                 articleId : obj_id,
-                articleTitle : doc.title
+                articleTitle : doc.title,
+                articleKeyword : data.keyword
                 }
             userPath.push(currentArticle);
             console.log(userPath);

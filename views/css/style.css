@@ -150,7 +150,8 @@ header #user-profile {
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	background-color: rgba(0, 0, 0, .2);
+	background-color: rgba(0, 0, 0, .6);
+	display: none;
 }
 
 #profile {
@@ -162,6 +163,7 @@ header #user-profile {
 	height: 60vh;
 	background-color: white;
 	border: 5px solid #7AC798;
+	overflow: scroll;
 }
 
 #profile h1 {
@@ -182,5 +184,31 @@ header #user-profile {
 }
 
 .reading-path{
+	list-style: none;
+	margin-top: 5em;
+}
+
+.path{
+	margin: 0 0 .25em 0;
+	background-color: #7AC798;
+	display: inline-block;
+	padding-right: 1em;
+	float: left;
+}
+
+.path h2 {
+	font-family: LeagueSpartan, Helvetica, sans-serif;
+	font-size: 1em;
+	color: white;
+	display: inline-block;
+	background-color: #3A806D;
+	margin: 0 1em 0 0;
+	padding: .5em .5em .25em .5em;
+	text-align: center;
+}
+
+.path p {
+	font-family: Raleway, Helvetica, sans-serif;
+	display: inline;
 
 }
